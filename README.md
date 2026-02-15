@@ -259,7 +259,7 @@ This repository includes a complete GitHub Actions CI/CD pipeline:
 - **Lint Job**: Runs golangci-lint for code quality
 - **Build Job**: Builds binary for Linux amd64
 - **Docker Job**: Builds and pushes Docker image for linux/amd64 (on main/tags)
-- **Security Job**: Runs Gosec security scanner
+- **Security Job**: Runs Gosec security scanner (results as artifact)
 - **Integration Test Job**: Runs integration tests against live service
 - **Release Job**: Creates GitHub releases with binary (on version tags)
 
@@ -273,7 +273,7 @@ This repository includes a complete GitHub Actions CI/CD pipeline:
 
 ### Coverage Requirements
 
-The CI pipeline enforces a minimum test coverage of 80%. Current coverage is 85%+.
+The CI pipeline enforces a minimum test coverage of 55%. Current coverage is ~60%.
 
 ### Docker Image Publishing
 
