@@ -10,7 +10,7 @@
 
 # Output of the go build
 /bin/
-robohub-auth
+/robohub-auth
 
 # Go workspace file
 go.work
