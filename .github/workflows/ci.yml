@@ -196,12 +196,43 @@ jobs:
         run: |
           ./robohub-auth &
           echo $! > service.pid
-          sleep 2
+          sleep 3
       
-      - name: Run integration tests
+      - name: Test health endpoint
         run: |
-          chmod +x ./test.sh
-          ./test.sh
+          curl -f http://localhost:8080/healthz || exit 1
+          echo "✓ Health check passed"
+      
+      - name: Test readiness endpoint
+        run: |
+          curl -f http://localhost:8080/readyz || exit 1
+          echo "✓ Readiness check passed"
+      
+      - name: Test missing OIDC token (expect 400)
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST http://localhost:8080/auth/github-oidc \
+            -H "Content-Type: application/json" \
+            -d '{}')
+          if [ "$STATUS" = "400" ]; then
+            echo "✓ Missing token validation passed"
+          else
+            echo "✗ Expected 400, got $STATUS"
+            exit 1
+          fi
+      
+      - name: Test invalid OIDC token (expect 401)
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST http://localhost:8080/auth/github-oidc \
+            -H "Content-Type: application/json" \
+            -d '{"oidc_token": "invalid.token.here"}')
+          if [ "$STATUS" = "401" ]; then
+            echo "✓ Invalid token rejected"
+          else
+            echo "✗ Expected 401, got $STATUS"
+            exit 1
+          fi
       
       - name: Stop service
         if: always()
