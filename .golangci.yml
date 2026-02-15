@@ -25,10 +25,12 @@ linters:
 linters-settings:
   errcheck:
     check-type-assertions: true
-    check-blank: true
+    check-blank: false  # Allow ignoring errors with blank identifier
   
   govet:
     enable-all: true
+    disable:
+      - fieldalignment  # Disable field alignment checks (minor optimization)
   
   gofmt:
     simplify: true

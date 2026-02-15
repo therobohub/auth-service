@@ -1,6 +1,7 @@
 package ratelimit
 
 import (
+	"context"
 	"sync"
 
 	"golang.org/x/time/rate"
@@ -32,7 +33,7 @@ func (l *Limiter) Allow(repository string) bool {
 // Wait waits until a request for the given repository is allowed
 func (l *Limiter) Wait(repository string) error {
 	limiter := l.getLimiter(repository)
-	return limiter.Wait(nil)
+	return limiter.Wait(context.TODO())
 }
 
 func (l *Limiter) getLimiter(repository string) *rate.Limiter {

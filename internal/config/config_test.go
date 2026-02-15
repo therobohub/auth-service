@@ -17,7 +17,7 @@ func TestLoadFromEnv(t *testing.T) {
 	} {
 		originalEnv[key] = os.Getenv(key)
 	}
-	
+
 	// Restore env after test
 	defer func() {
 		for key, value := range originalEnv {
@@ -40,7 +40,7 @@ func TestLoadFromEnv(t *testing.T) {
 	t.Run("defaults", func(t *testing.T) {
 		os.Clearenv()
 		os.Setenv("ROBOHUB_JWT_SECRET", "test-secret")
-		
+
 		cfg, err := LoadFromEnv()
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
@@ -77,7 +77,7 @@ func TestLoadFromEnv(t *testing.T) {
 		os.Setenv("ROBOHUB_RATE_LIMIT_RPS", "2.5")
 		os.Setenv("ROBOHUB_RATE_LIMIT_BURST", "10")
 		os.Setenv("ROBOHUB_TOKEN_TTL_SECONDS", "300")
-		
+
 		cfg, err := LoadFromEnv()
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)

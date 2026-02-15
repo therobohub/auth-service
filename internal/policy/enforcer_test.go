@@ -17,10 +17,10 @@ func TestEnforcer_Evaluate(t *testing.T) {
 		errorContains     string
 	}{
 		{
-			name:          "allowed repo and ref",
-			repository:    "owner/repo",
-			ref:           "refs/heads/main",
-			wantError:     false,
+			name:       "allowed repo and ref",
+			repository: "owner/repo",
+			ref:        "refs/heads/main",
+			wantError:  false,
 		},
 		{
 			name:          "denied repo",
@@ -39,11 +39,11 @@ func TestEnforcer_Evaluate(t *testing.T) {
 			errorContains: "not in allowlist",
 		},
 		{
-			name:          "in allowlist",
-			allowList:     []string{"good/repo"},
-			repository:    "good/repo",
-			ref:           "refs/heads/main",
-			wantError:     false,
+			name:       "in allowlist",
+			allowList:  []string{"good/repo"},
+			repository: "good/repo",
+			ref:        "refs/heads/main",
+			wantError:  false,
 		},
 		{
 			name:              "default branch only - valid",
@@ -153,7 +153,7 @@ func TestExtractBranch(t *testing.T) {
 }
 
 func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(substr) == 0 || 
+	return len(s) >= len(substr) && (s == substr || len(substr) == 0 ||
 		(len(s) > 0 && len(substr) > 0 && containsHelper(s, substr)))
 }
 

@@ -56,7 +56,7 @@ func TestLimiter_Allow(t *testing.T) {
 
 	t.Run("per-repository isolation", func(t *testing.T) {
 		limiter := NewLimiter(1.0, 1)
-		
+
 		repo1 := "test/repo1"
 		repo2 := "test/repo2"
 
@@ -111,7 +111,7 @@ func TestLimiter_Concurrent(t *testing.T) {
 
 func TestLimiter_Reset(t *testing.T) {
 	limiter := NewLimiter(1.0, 1)
-	
+
 	limiter.Allow("test/repo1")
 	limiter.Allow("test/repo2")
 

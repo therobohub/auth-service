@@ -17,12 +17,12 @@ import (
 
 // Server holds the HTTP API server
 type Server struct {
-	router    chi.Router
-	logger    *slog.Logger
-	verifier  oidc.Verifier
-	policy    *policy.Enforcer
-	limiter   *ratelimit.Limiter
-	minter    *token.Minter
+	router   chi.Router
+	logger   *slog.Logger
+	verifier oidc.Verifier
+	policy   *policy.Enforcer
+	limiter  *ratelimit.Limiter
+	minter   *token.Minter
 }
 
 // NewServer creates a new HTTP API server
@@ -71,13 +71,13 @@ func (s *Server) Handler() http.Handler {
 // handleHealthz handles health check requests
 func (s *Server) handleHealthz(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("ok"))
+	_, _ = w.Write([]byte("ok"))
 }
 
 // handleReadyz handles readiness check requests
 func (s *Server) handleReadyz(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("ok"))
+	_, _ = w.Write([]byte("ok"))
 }
 
 // handleGitHubOIDC handles GitHub OIDC token exchange
@@ -123,13 +123,13 @@ func (s *Server) handleGitHubOIDC(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check policy
-	if err := s.policy.Evaluate(claims.Repository, claims.Ref); err != nil {
+	if policyErr := s.policy.Evaluate(claims.Repository, claims.Ref); policyErr != nil {
 		s.logger.WarnContext(ctx, "policy violation",
 			"repository", claims.Repository,
 			"ref", claims.Ref,
-			"error", err,
+			"error", policyErr,
 		)
-		s.respondError(w, http.StatusForbidden, "policy_violation", err.Error())
+		s.respondError(w, http.StatusForbidden, "policy_violation", policyErr.Error())
 		return
 	}
 
@@ -169,13 +169,13 @@ func (s *Server) handleGitHubOIDC(w http.ResponseWriter, r *http.Request) {
 func (s *Server) respondJSON(w http.ResponseWriter, status int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(data)
+	_ = json.NewEncoder(w).Encode(data)
 }
 
 func (s *Server) respondError(w http.ResponseWriter, status int, errorCode, message string) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(types.ErrorResponse{
+	_ = json.NewEncoder(w).Encode(types.ErrorResponse{
 		Error:   errorCode,
 		Message: message,
 	})
@@ -184,7 +184,7 @@ func (s *Server) respondError(w http.ResponseWriter, status int, errorCode, mess
 func (s *Server) loggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		
+
 		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 		next.ServeHTTP(ww, r)
 

@@ -283,8 +283,3 @@ func newTestServer() *Server {
 	s.router = s.setupRouter()
 	return s
 }
-
-func (s *Server) withRouter() *Server {
-	s.router = s.setupRouter()
-	return s
-}

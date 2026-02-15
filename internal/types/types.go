@@ -34,33 +34,33 @@ type ErrorResponse struct {
 
 // GitHubOIDCClaims represents the claims extracted from a GitHub Actions OIDC token
 type GitHubOIDCClaims struct {
-	Issuer       string `json:"iss"`
-	Subject      string `json:"sub"`
-	Audience     string `json:"aud"`
-	ExpiresAt    int64  `json:"exp"`
-	NotBefore    int64  `json:"nbf"`
-	IssuedAt     int64  `json:"iat"`
-	Repository   string `json:"repository"`
-	Ref          string `json:"ref"`
-	Actor        string `json:"actor"`
-	RunID        string `json:"run_id"`
-	WorkflowRef  string `json:"workflow_ref"`
+	Issuer         string `json:"iss"`
+	Subject        string `json:"sub"`
+	Audience       string `json:"aud"`
+	ExpiresAt      int64  `json:"exp"`
+	NotBefore      int64  `json:"nbf"`
+	IssuedAt       int64  `json:"iat"`
+	Repository     string `json:"repository"`
+	Ref            string `json:"ref"`
+	Actor          string `json:"actor"`
+	RunID          string `json:"run_id"`
+	WorkflowRef    string `json:"workflow_ref"`
 	JobWorkflowRef string `json:"job_workflow_ref"`
 }
 
 // RoboHubClaims represents the claims in a RoboHub access token
 type RoboHubClaims struct {
-	Issuer    string    `json:"iss"`
-	Subject   string    `json:"sub"`
-	Audience  string    `json:"aud"`
-	IssuedAt  int64     `json:"iat"`
-	ExpiresAt int64     `json:"exp"`
-	JTI       string    `json:"jti"`
-	Repo      string    `json:"repo"`
-	Ref       string    `json:"ref"`
-	Actor     string    `json:"actor"`
-	RunID     string    `json:"run_id"`
-	Scopes    []string  `json:"scopes"`
+	Issuer    string   `json:"iss"`
+	Subject   string   `json:"sub"`
+	Audience  string   `json:"aud"`
+	IssuedAt  int64    `json:"iat"`
+	ExpiresAt int64    `json:"exp"`
+	JTI       string   `json:"jti"`
+	Repo      string   `json:"repo"`
+	Ref       string   `json:"ref"`
+	Actor     string   `json:"actor"`
+	RunID     string   `json:"run_id"`
+	Scopes    []string `json:"scopes"`
 }
 
 // VerifiedClaims represents verified OIDC claims

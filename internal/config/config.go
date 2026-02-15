@@ -17,41 +17,41 @@ type Config struct {
 	JWTSecret string
 
 	// OIDC Configuration
-	OIDCIssuer           string
-	OIDCAudience         string
-	ClockSkew            time.Duration
-	JWKSTTLSeconds       int
+	OIDCIssuer     string
+	OIDCAudience   string
+	ClockSkew      time.Duration
+	JWKSTTLSeconds int
 
 	// Policy Configuration
-	DefaultBranchOnly    bool
-	DefaultBranch        string
-	RepoDenyList         []string
-	RepoAllowList        []string
+	DefaultBranchOnly bool
+	DefaultBranch     string
+	RepoDenyList      []string
+	RepoAllowList     []string
 
 	// Rate Limiting
-	RateLimitRPS         float64
-	RateLimitBurst       int
+	RateLimitRPS   float64
+	RateLimitBurst int
 
 	// Token Configuration
-	TokenTTL             time.Duration
+	TokenTTL time.Duration
 }
 
 // LoadFromEnv loads configuration from environment variables
 func LoadFromEnv() (*Config, error) {
 	cfg := &Config{
-		Port:                 getEnv("PORT", "8080"),
-		JWTSecret:            os.Getenv("ROBOHUB_JWT_SECRET"),
-		OIDCIssuer:           getEnv("ROBOHUB_OIDC_ISSUER", "https://token.actions.githubusercontent.com"),
-		OIDCAudience:         getEnv("ROBOHUB_OIDC_AUDIENCE", "robohub"),
-		ClockSkew:            time.Duration(getEnvInt("ROBOHUB_CLOCK_SKEW_SECONDS", 60)) * time.Second,
-		JWKSTTLSeconds:       getEnvInt("ROBOHUB_JWKS_TTL_SECONDS", 3600),
-		DefaultBranchOnly:    getEnvBool("ROBOHUB_DEFAULT_BRANCH_ONLY", false),
-		DefaultBranch:        getEnv("ROBOHUB_DEFAULT_BRANCH", "main"),
-		RepoDenyList:         parseCommaSeparated(getEnv("ROBOHUB_REPO_DENYLIST", "")),
-		RepoAllowList:        parseCommaSeparated(getEnv("ROBOHUB_REPO_ALLOWLIST", "")),
-		RateLimitRPS:         getEnvFloat("ROBOHUB_RATE_LIMIT_RPS", 1.0),
-		RateLimitBurst:       getEnvInt("ROBOHUB_RATE_LIMIT_BURST", 5),
-		TokenTTL:             time.Duration(getEnvInt("ROBOHUB_TOKEN_TTL_SECONDS", 600)) * time.Second,
+		Port:              getEnv("PORT", "8080"),
+		JWTSecret:         os.Getenv("ROBOHUB_JWT_SECRET"),
+		OIDCIssuer:        getEnv("ROBOHUB_OIDC_ISSUER", "https://token.actions.githubusercontent.com"),
+		OIDCAudience:      getEnv("ROBOHUB_OIDC_AUDIENCE", "robohub"),
+		ClockSkew:         time.Duration(getEnvInt("ROBOHUB_CLOCK_SKEW_SECONDS", 60)) * time.Second,
+		JWKSTTLSeconds:    getEnvInt("ROBOHUB_JWKS_TTL_SECONDS", 3600),
+		DefaultBranchOnly: getEnvBool("ROBOHUB_DEFAULT_BRANCH_ONLY", false),
+		DefaultBranch:     getEnv("ROBOHUB_DEFAULT_BRANCH", "main"),
+		RepoDenyList:      parseCommaSeparated(getEnv("ROBOHUB_REPO_DENYLIST", "")),
+		RepoAllowList:     parseCommaSeparated(getEnv("ROBOHUB_REPO_ALLOWLIST", "")),
+		RateLimitRPS:      getEnvFloat("ROBOHUB_RATE_LIMIT_RPS", 1.0),
+		RateLimitBurst:    getEnvInt("ROBOHUB_RATE_LIMIT_BURST", 5),
+		TokenTTL:          time.Duration(getEnvInt("ROBOHUB_TOKEN_TTL_SECONDS", 600)) * time.Second,
 	}
 
 	// Validate required fields
